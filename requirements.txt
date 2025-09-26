@@ -1,0 +1,8 @@
+Esse documento tem a intençãode documentar as bibliotecas utilizadas e necessárias para rodar o projeto.
+
+ - customtkinter
+
+ Esta é a principal biblioteca so projeto. Sendo uma biblioteca de interface gráfica (GUI). Ela é uma extensão da biblioteca padrão Tkinter do Python e é utilizada para criar o design da sua aplicação.
+
+ Função: Cria widgets modernos e personalizáveis, como botões, rótulos e caixas de texto, com um visual mais limpo e temas escuros, o que se alinha perfeitamente com o design da sua aplicação "Seal Cryptography".
+
