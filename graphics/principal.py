@@ -11,12 +11,11 @@ def main(janela_login, user_name):
     principal.update()
     principal.grab_set()
 
-    
+    #grid principal da tela
     principal.grid_columnconfigure(0,weight=1)
     principal.grid_columnconfigure(1,weight=1)
     principal.grid_columnconfigure(2,weight=1)
     principal.grid_columnconfigure(3,weight=1)
-
     principal.grid_rowconfigure(0,weight=1)
     principal.grid_rowconfigure(1,weight=1)
     principal.grid_rowconfigure(2,weight=1)
@@ -38,18 +37,34 @@ def main(janela_login, user_name):
     textbox_frame.grid_columnconfigure(1, weight=1)
     
     # - Caixas de texto
-    label_cripto_text = ctk.CTkLabel(textbox_frame, text="Mensagem de Entrada:", font=("Roboto", 16), text_color="#BDC3C7")
+    label_cripto_text = ctk.CTkLabel(textbox_frame, 
+                                    text="Mensagem de Entrada:",
+                                    font=("Roboto", 16),
+                                    text_color="#BDC3C7")
     label_cripto_text.grid(row=0, column=0, sticky="ew", padx=10)
-    cripto_text = ctk.CTkTextbox(textbox_frame, width=350, height=150, font=("Roboto", 16), border_color="#34495E")
+    cripto_text = ctk.CTkTextbox(textbox_frame, 
+                                 width=350, 
+                                 height=150, 
+                                 font=("Roboto", 16), 
+                                 border_color="#34495E")
     cripto_text.grid(row=1, column=0, padx=10, pady=5)
     
     #Caixa de texto saida
 
-    label_resultado_text = ctk.CTkLabel(textbox_frame, text="Resultado:", font=("Roboto", 16), text_color="#BDC3C7")
+    label_resultado_text = ctk.CTkLabel(textbox_frame, 
+                                        text="Resultado:", 
+                                        font=("Roboto", 16), 
+                                        text_color="#BDC3C7")
     label_resultado_text.grid(row=0, column=1, sticky="ew", padx=10)
-    resultado_text = ctk.CTkTextbox(textbox_frame, width=350, height=150, font=("Roboto", 16), border_color="#34495E", state="disabled")
+    resultado_text = ctk.CTkTextbox(textbox_frame, 
+                                    width=350, 
+                                    height=150, 
+                                    font=("Roboto", 16), 
+                                    border_color="#34495E", 
+                                    state="disabled")
     resultado_text.grid(row=1, column=1, padx=10, pady=5)
 
+    #Frama para alinhar os botões
     btn_frame = ctk.CTkFrame(principal, fg_color="transparent")
     btn_frame.grid(row=2, column=1, columnspan=2, pady=10)
     btn_frame.grid_columnconfigure(0, weight=1)
