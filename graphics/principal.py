@@ -1,5 +1,13 @@
-import customtkinter as ctk    
+import customtkinter as ctk 
+from Crypto.Random import get_random_bytes
+from datetime import datetime
+from criptografia import criptografia_simetrica
+from criptografia import descriptografia_simetrica
+
+
 # ----------------------- Função da janela principal --------------------------
+
+
 def main(janela_login, user_name):
     
     principal = ctk.CTkToplevel()
@@ -20,10 +28,75 @@ def main(janela_login, user_name):
     principal.grid_rowconfigure(1,weight=1)
     principal.grid_rowconfigure(2,weight=1)
     principal.grid_rowconfigure(3,weight=1)
+
+
+    # Gerando chave simetrica:
+
+    chave_sessao = get_random_bytes(32)
+
+
+
+    #função Criptografia
+
+    def criptografar_mensagem():
+  
+        conteudo_limpo = cripto_text.get("1.0", "end-1c").strip() #Obtem conteudo da caixa de texto e remove espaços em branco
+    
+    
+        if not conteudo_limpo: #Verifica se a variavel conteudo limpo esta com uma string vazia
+            resultado_text.configure(state="normal")
+            resultado_text.delete("1.0", "end")
+            resultado_text.insert("1.0", "Digite uma mensagem para criptografar.")#Retorna a mensagem caso estaja vazia
+            resultado_text.configure(state="disabled")
+        
+        
+            cripto_text.configure(state="normal")# Ativa o campo de entrada para nova digitação
+            return
+    
+        cripto_text.delete("1.0", "end-1c")#Limpa o campo de entrada e o desativa
+        
+
+    
+        mensagem_original = cripto_text.get("1.0", "end-1c") # Recaptura a mensagem
+        mensagem_criptografada = criptografia_simetrica(conteudo_limpo,chave_sessao)
+
+  
+        resultado_text.configure(state="normal") #Exibe o resultado
+        resultado_text.delete("1.0", "end")
+        resultado_text.insert("1.0", mensagem_criptografada)
+        
     
 
+    #---------------------------  Função Para Chamar  descriptografia --------------------#
+    def descriptografar_mensagem():
+        
+        conteudo_cripto = resultado_text.get("1.0", "end-1c").strip()
+        
+        if not conteudo_cripto:
+            cripto_text.configure(state="normal")
+            cripto_text.delete("1.0", "end")
+            cripto_text.insert("1.0", "Não há mensagem para descriptografar.")
+            cripto_text.configure(state="normal")
+            return
+            
+        try:
+            # Passa a chave para a função Descriptografia Simetrica
+            mensagem_descriptografada = descriptografia_simetrica(conteudo_cripto, chave_sessao)
+            
+            cripto_text.configure(state="normal")
+            cripto_text.delete("1.0", "end")
+            cripto_text.insert("1.0", mensagem_descriptografada)
+           
+
+        except ValueError as e:
+            cripto_text.configure(state="normal")
+            cripto_text.delete("1.0", "end")
+            cripto_text.insert("1.0", f"Erro na descriptografia: {e}")
+        
+    dia_atual = datetime.now()
+    data_atual_formatada = dia_atual.strftime("%d-%m-%Y")
     label_saudacao = ctk.CTkLabel(principal,
-                                  text=f"Seja bem vindo {user_name}",
+                                  text=f"Seja bem vindo {user_name}\n Data de Acesso: {data_atual_formatada}",
                                     font=("Roboto", 20))
     label_saudacao.grid(row=0, column=1,columnspan=2, pady=(10, 5))
 
@@ -64,7 +137,7 @@ def main(janela_login, user_name):
                                     state="disabled")
     resultado_text.grid(row=1, column=1, padx=10, pady=5)
 
-    #Frama para alinhar os botões
+    #Frame para alinhar os botões
     btn_frame = ctk.CTkFrame(principal, fg_color="transparent")
     btn_frame.grid(row=2, column=1, columnspan=2, pady=10)
     btn_frame.grid_columnconfigure(0, weight=1)
@@ -73,10 +146,10 @@ def main(janela_login, user_name):
 
     #Botões criptografar e descriptografar
 
-    btn_encrypt = ctk.CTkButton(btn_frame, height=40, text="CRIPTOGRAFAR", fg_color="blue",hover_color="dark blue" )
+    btn_encrypt = ctk.CTkButton(btn_frame, height=40, text="CRIPTOGRAFAR", fg_color="blue",hover_color="dark blue", command=criptografar_mensagem )
     btn_encrypt.grid(row=0, column=0, padx=(0, 20))
 
-    btn_decrypt = ctk.CTkButton(btn_frame,height=40, text="DESCRIPTOGRAFAR", fg_color="#DC2525", hover_color="#8E1616")
+    btn_decrypt = ctk.CTkButton(btn_frame,height=40, text="DESCRIPTOGRAFAR", fg_color="#DC2525", hover_color="#8E1616", command=descriptografar_mensagem)
     btn_decrypt.grid(row=0, column=2, padx=(10, 20))
 
 

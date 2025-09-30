@@ -1,8 +1,11 @@
-from PIL import Image 
+import sys
+import os 
+project_root = os.path.join(os.path.dirname(__file__), '..')
+sys.path.append(project_root)
 import customtkinter as ctk
-from principal import main
-
-
+from graphics.principal import main
+from criptografia import criptografia_simetrica
+from criptografia import descriptografia_simetrica
 
 def app():
 
