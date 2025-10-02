@@ -70,28 +70,28 @@ def main(janela_login, user_name):
     #---------------------------  Função Para Chamar  descriptografia --------------------#
     def descriptografar_mensagem():
         
-        conteudo_cripto = resultado_text.get("1.0", "end-1c").strip()
+        conteudo_cripto = cripto_text.get("1.0", "end-1c").strip()
         
         if not conteudo_cripto:
-            cripto_text.configure(state="normal")
-            cripto_text.delete("1.0", "end")
-            cripto_text.insert("1.0", "Não há mensagem para descriptografar.")
-            cripto_text.configure(state="normal")
+            resultado_text.configure(state="normal")
+            resultado_text.delete("1.0", "end")
+            resultado_text.insert("1.0", "Não há mensagem para descriptografar.")
+            resultado_text.configure(state="normal")
             return
             
         try:
             # Passa a chave para a função Descriptografia Simetrica
             mensagem_descriptografada = descriptografia_simetrica(conteudo_cripto, chave_sessao)
             
-            cripto_text.configure(state="normal")
-            cripto_text.delete("1.0", "end")
-            cripto_text.insert("1.0", mensagem_descriptografada)
+            resultado_text.configure(state="normal")
+            resultado_text.delete("1.0", "end")
+            resultado_text.insert("1.0", mensagem_descriptografada)
            
 
         except ValueError as e:
-            cripto_text.configure(state="normal")
-            cripto_text.delete("1.0", "end")
-            cripto_text.insert("1.0", f"Erro na descriptografia: {e}")
+            resultado_text.configure(state="normal")
+            resultado_text.delete("1.0", "end")
+            resultado_text.insert("1.0", f"Erro na descriptografia: {e}")
         
     dia_atual = datetime.now()
     data_atual_formatada = dia_atual.strftime("%d-%m-%Y")
