@@ -141,7 +141,7 @@ Seal_Criptography/<br>
 <li><b>Leonardo Mouzart - H342872</b></li>
 <li><b>Julia Salim - H342872 </b></li>
 <li><b>Enzo Correr - R859258</b></li>
-
+</ul>
 
 
 <h2>🙏 Agradecimentos</h2>
