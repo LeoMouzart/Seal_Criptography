@@ -137,14 +137,10 @@ Seal_Criptography/<br>
 
 <h2>👨‍💻 Desenvolvedores</h2>
 
-<h3>Leonardo Mouzart</h3>
-GitHub: <a href"https://github.com/LeoMouzart">@LeoMouzart</a><br>
-Projeto: Seal Criptography<br>
-<p>_______________________________________________________________</p>
-<h3>Julia Salim</h3><br>
-<p>_______________________________________________________________</p>
-<h3>Enzo Correr</h3>
-
+<ul>
+<li><b>Leonardo Mouzart - H342872</b></li>
+<li><b>Julia Salim - H342872 </b></li>
+<li><b>Enzo Correr - R859258</b></li>
 
 
 
