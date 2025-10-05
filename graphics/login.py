@@ -10,7 +10,6 @@ from criptografia import descriptografia_simetrica
 def app():
 
 
-
     ctk.set_appearance_mode("Dark")
 
     app = ctk.CTk()
@@ -22,7 +21,7 @@ def app():
     app.grid_columnconfigure(1, weight=0)
     app.grid_columnconfigure(2, weight=1)
     
-
+    
     app.grid_rowconfigure(0, weight=1)
     app.grid_rowconfigure(1, weight=1)
     app.grid_rowconfigure(2, weight=1)

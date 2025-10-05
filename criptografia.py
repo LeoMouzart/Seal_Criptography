@@ -3,53 +3,60 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
-def criptografia_simetrica(mensagem: str, chave: bytes) -> str:
-    
-
+def criptografia_simetrica(mensagem, chave):
+    """
+    Criptografa uma mensagem usando AES
+    """
+    # Verifica se a chave tem tamanho válido
     if len(chave) not in [16, 24, 32]:
-        raise ValueError("A chave deve ter 16, 24 ou 32 bytes de comprimento.")
+        raise ValueError("A chave deve ter 16, 24 ou 32 bytes")
     
-    # Cria um objeto AES em modo EAX
-    cipher = AES.new(chave, AES.MODE_EAX)
+    # Cria o objeto para criptografia
+    cifra = AES.new(chave, AES.MODE_EAX)
     
-    # Criptografa a mensagem e gera a tag de autenticação
-    ciphertext, tag = cipher.encrypt_and_digest(mensagem.encode('utf-8'))
+    # Criptografa a mensagem
+    texto_criptografado, tag = cifra.encrypt_and_digest(mensagem.encode('utf-8'))
     
-    # Prepara o payload para ser serializado como JSON
-    payload = {
-        "nonce": base64.b64encode(cipher.nonce).decode('utf-8'),
-        "ciphertext": base64.b64encode(ciphertext).decode('utf-8'),
-        "tag": base64.b64encode(tag).decode('utf-8')
+    # Converte para base64 para facilitar armazenamento
+    nonce_b64 = base64.b64encode(cifra.nonce).decode('utf-8')
+    texto_b64 = base64.b64encode(texto_criptografado).decode('utf-8')
+    tag_b64 = base64.b64encode(tag).decode('utf-8')
+    
+    # Cria um dicionário com os dados
+    dados_criptografados = {
+        "nonce": nonce_b64,
+        "texto_criptografado": texto_b64,
+        "tag": tag_b64
     }
     
-    return json.dumps(payload)
+    # Converte para JSON string
+    return json.dumps(dados_criptografados)
 
 
 
-def descriptografia_simetrica(cifra_criptografado: str, chave: bytes) -> str:
-    
+def descriptografia_simetrica(dados_json, chave):
+
+    # Verifica se a chave tem tamanho válido
     if len(chave) not in [16, 24, 32]:
-        raise ValueError("A chave deve ter 16, 24 ou 32 bytes de comprimento.")
-
+        raise ValueError("A chave deve ter 16, 24 ou 32 bytes")
+    
     try:
-        # Decodifica a string JSON para um dicionário
-        payload = json.loads(cifra_criptografado)
+        # Converte JSON string para dicionário
+        dados = json.loads(dados_json)
         
-        # Converte os dados de Base64 para bytes
-        nonce = base64.b64decode(payload["nonce"])
-        ciphertext = base64.b64decode(payload["ciphertext"])
-        tag = base64.b64decode(payload["tag"])
-
-        # Cria um novo objeto AES com os dados
-        cipher = AES.new(chave, AES.MODE_EAX, nonce=nonce)
+        # Converte de base64 para bytes
+        nonce = base64.b64decode(dados["nonce"])
+        texto_criptografado = base64.b64decode(dados["texto_criptografado"])
+        tag = base64.b64decode(dados["tag"])
         
-        # Descriptografa a mensagem e verifica a autenticidade
-        mensagem_original = cipher.decrypt_and_verify(ciphertext, tag)
+        # Cria o objeto para descriptografia
+        cifra = AES.new(chave, AES.MODE_EAX, nonce=nonce)
         
-        return mensagem_original.decode('utf-8')
-
-    except (ValueError, KeyError) as e:
-        raise ValueError("Erro ao descriptografar: dados inválidos ou chave incorreta.") from e
-
-
+        # Descriptografa e verifica a autenticidade
+        texto_original = cifra.decrypt_and_verify(texto_criptografado, tag)
+        
+        return texto_original.decode('utf-8')
+    
+    except (ValueError, KeyError):
+        raise ValueError("Erro: dados inválidos ou chave incorreta")
 
