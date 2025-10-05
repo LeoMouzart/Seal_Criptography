@@ -50,7 +50,7 @@ def app():
             main(app,user_name)
 
     #Botão
-    btn_login = ctk.CTkButton(app,height=40, text="Autenticar", width=100, fg_color="#6E8CFB",command=valida_login)
+    btn_login = ctk.CTkButton(app,height=40, text="Autenticar",font=("Roboto", 14, "bold"), width=100, fg_color="#1230AE",hover_color="#091057",command=valida_login)
     btn_login.grid(row=2, column=1,)
 
     #Mensagem de erro

@@ -146,10 +146,10 @@ def main(janela_login, user_name):
 
     #Botões criptografar e descriptografar
 
-    btn_encrypt = ctk.CTkButton(btn_frame, height=40, text="CRIPTOGRAFAR", fg_color="blue",hover_color="dark blue", command=criptografar_mensagem )
+    btn_encrypt = ctk.CTkButton(btn_frame, height=40, text="CRIPTOGRAFAR",font=("Roboto", 14, "bold"), fg_color="blue",hover_color="dark blue", command=criptografar_mensagem )
     btn_encrypt.grid(row=0, column=0, padx=(0, 20))
 
-    btn_decrypt = ctk.CTkButton(btn_frame,height=40, text="DESCRIPTOGRAFAR", fg_color="#DC2525", hover_color="#8E1616", command=descriptografar_mensagem)
+    btn_decrypt = ctk.CTkButton(btn_frame,height=40, text="DESCRIPTOGRAFAR",font=("Roboto", 14, "bold"), fg_color="#59AC77",hover_color="#556B2F", command=descriptografar_mensagem)
     btn_decrypt.grid(row=0, column=2, padx=(10, 20))
 
 
@@ -157,7 +157,7 @@ def main(janela_login, user_name):
         principal.destroy()
         janela_login.deiconify()
         
-    btn_voltar = ctk.CTkButton(principal,height=40, text="Voltar",fg_color="red", command=voltar_ao_login)
+    btn_voltar = ctk.CTkButton(principal,height=40, text="Voltar",font=("Roboto", 14, "bold"), fg_color="red", command=voltar_ao_login)
     btn_voltar.grid(row=3, column=1, columnspan=2, pady=10)
     principal.update()
     #---------------------------------------------------------------------------------------
